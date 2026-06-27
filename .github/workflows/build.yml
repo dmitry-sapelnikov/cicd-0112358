@@ -1,0 +1,31 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Run example (Windows)
+        if: runner.os == 'Windows'
+        run: build/Release/fibonacci_hello_world.exe
+
+      - name: Run example (Linux)
+        if: runner.os == 'Linux'
+        run: ./build/fibonacci_hello_world
