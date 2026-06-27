@@ -22,7 +22,4 @@ Drawn beyond the lines of reason
 
 Push the envelope
 
-Watch it
-
-Bend
-
+Watch it bend
