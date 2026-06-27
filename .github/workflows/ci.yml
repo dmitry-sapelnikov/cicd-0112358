@@ -13,7 +13,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -26,8 +26,8 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "Dmitry Sapelnikov"
+          git config user.email "dmitry.sapelnikov@gmail.com"
           if ! git diff --quiet; then
             git add -A
             git commit -m "style: apply clang-format"
@@ -44,20 +44,20 @@ jobs:
         os: [windows-latest, ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref }}
 
       - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B out -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build out --config Release
 
       - name: Run example (Windows)
         if: runner.os == 'Windows'
-        run: build/Release/fibonacci_hello_world.exe
+        run: out/Release/fibonacci_hello_world.exe
 
       - name: Run example (Linux)
         if: runner.os == 'Linux'
-        run: ./build/fibonacci_hello_world
+        run: ./out/fibonacci_hello_world
