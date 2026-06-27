@@ -3,10 +3,40 @@ name: CI
 on:
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
+  clang-format:
+    name: Auto-format C++ code
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format-18
+
+      - name: Run clang-format
+        run: git ls-files | grep -E '\.(cpp|h)$' | xargs clang-format-18 -i
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add -A
+            git commit -m "style: apply clang-format"
+            git push
+          fi
+
   build:
     name: Build on ${{ matrix.os }}
+    needs: clang-format
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -15,6 +45,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Configure
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
