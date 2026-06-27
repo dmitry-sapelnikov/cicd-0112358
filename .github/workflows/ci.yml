@@ -49,15 +49,15 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Configure
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B out -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build out --config Release
 
       - name: Run example (Windows)
         if: runner.os == 'Windows'
-        run: build/Release/fibonacci_hello_world.exe
+        run: out/Release/fibonacci_hello_world.exe
 
       - name: Run example (Linux)
         if: runner.os == 'Linux'
-        run: ./build/fibonacci_hello_world
+        run: ./out/fibonacci_hello_world
