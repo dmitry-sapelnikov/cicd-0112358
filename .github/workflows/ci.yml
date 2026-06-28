@@ -60,6 +60,10 @@ jobs:
           path: ~/.conan2/p
           key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
 
+      - name: Set up MSVC environment (Windows)
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Configure
         run: cmake -B out -DCMAKE_BUILD_TYPE=Release -G Ninja
 
