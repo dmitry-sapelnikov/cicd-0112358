@@ -35,7 +35,7 @@ jobs:
           fi
 
   build:
-    name: Build on ${{ matrix.os }}
+    name: Build & Test on ${{ matrix.os }}
     needs: clang-format
     runs-on: ${{ matrix.os }}
     strategy:
@@ -48,15 +48,30 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - name: Install Conan
+        run: pip install conan
+
+      - name: Set up Conan profile
+        run: conan profile detect --force
+
+      - name: Cache Conan packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.conan2/p
+          key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
+
       - name: Configure
-        run: cmake -B out -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B out -DCMAKE_BUILD_TYPE=Release -G Ninja
 
       - name: Build
-        run: cmake --build out --config Release
+        run: cmake --build out
+
+      - name: Test
+        run: ctest --test-dir out --output-on-failure
 
       - name: Run example (Windows)
         if: runner.os == 'Windows'
-        run: out/Release/fibonacci_hello_world.exe
+        run: out\fibonacci_hello_world.exe
 
       - name: Run example (Linux)
         if: runner.os == 'Linux'
