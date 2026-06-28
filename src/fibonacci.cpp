@@ -1,18 +1,18 @@
 #include "fibonacci.h"
 
-unsigned long long get_fibonacci(const unsigned index) noexcept
+uint64_t get_fibonacci(const unsigned index) noexcept
 {
     if(index <= 1U)
     {
         return index;
     }
 
-    unsigned long long prev = 0ULL;
-    unsigned long long cur = 1ULL;
+    uint64_t prev = 0ULL;
+    uint64_t cur = 1ULL;
 
     for(unsigned i = 2U; i <= index; ++i)
     {
-        unsigned long long next = prev + cur;
+        uint64_t next = prev + cur;
         prev = cur;
         cur = next;
     }
