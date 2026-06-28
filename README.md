@@ -15,10 +15,10 @@ A C++17 project demonstrating a CI pipeline with CMake, Conan 2, and GitHub Acti
 ## Project structure
 
 ```
-include/   fibonacci.h                      - public API
-src/       fibonacci.cpp                    - iterative implementation
-tests/     test_fibonacci.cpp               - GTest unit tests
-examples/  fibonacci_hello_world/main.cpp   - A basic example of usage
+include/fibonacci.h - public API
+src/fibonacci.cpp - iterative implementation of Fibonacci computation
+tests/test_fibonacci.cpp - GTest unit tests
+examples/fibonacci_hello_world/main.cpp - A basic example of usage
 ```
 
 ## Building locally
