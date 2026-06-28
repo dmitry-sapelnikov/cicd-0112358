@@ -49,7 +49,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Install Conan
-        run: pip install conan
+        run: pip install "conan>=2.0,<3"
 
       - name: Set up MSVC environment (Windows)
         if: runner.os == 'Windows'

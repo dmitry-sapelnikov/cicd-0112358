@@ -5,6 +5,13 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Require Conan 2.x
+$conanVersion = (conan --version 2>&1) -replace 'Conan version ', ''
+if (-not ($conanVersion -match '^2\.')) {
+    Write-Error "Conan 2.x required, found: $conanVersion"
+    exit 1
+}
+
 $buildFlag  = if ($Force) { '--build=*' } else { '--build=missing' }
 $outputFolder = 'out/conan'
 
