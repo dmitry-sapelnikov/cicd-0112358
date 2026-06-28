@@ -7,6 +7,23 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Warning levels
+if(MSVC)
+    add_compile_options(/W4)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# Treat warnings as errors (off by default; CI enables it via -DWARNINGS_AS_ERRORS=ON)
+option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
+if(WARNINGS_AS_ERRORS)
+    if(MSVC)
+        add_compile_options(/WX)
+    else()
+        add_compile_options(-Werror)
+    endif()
+endif()
+
 # Conan package paths – add out/conan so find_package locates Conan-installed
 # dependencies without requiring CMAKE_TOOLCHAIN_FILE to be set externally.
 set(_conan_dir "${CMAKE_CURRENT_SOURCE_DIR}/out/conan")

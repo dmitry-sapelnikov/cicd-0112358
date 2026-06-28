@@ -63,7 +63,7 @@ jobs:
         run: conan install . --build=missing -s build_type=Release -s compiler.cppstd=17 -c tools.cmake.cmaketoolchain:generator=Ninja --output-folder out/conan
 
       - name: Configure (generate compile_commands.json)
-        run: cmake --preset conan-release -DBUILD_TESTING=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run: cmake --preset conan-release -DBUILD_TESTING=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DWARNINGS_AS_ERRORS=ON
 
       - name: Run clang-tidy
         run: |
@@ -105,7 +105,7 @@ jobs:
         run: conan install . --build=missing -s build_type=Release -s compiler.cppstd=17 -c tools.cmake.cmaketoolchain:generator=Ninja --output-folder out/conan
 
       - name: Configure
-        run: cmake --preset conan-release -DBUILD_TESTING=ON
+        run: cmake --preset conan-release -DBUILD_TESTING=ON -DWARNINGS_AS_ERRORS=ON
 
       - name: Build
         run: cmake --build --preset conan-release
