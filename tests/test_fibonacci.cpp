@@ -1,6 +1,6 @@
-#include "fibonacci.h"
-
 #include <gtest/gtest.h>
+
+#include "fibonacci.h"
 
 TEST(FibonacciTest, SmallIndices)
 {
