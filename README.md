@@ -1,6 +1,6 @@
 # cicd-0112358
 
-![CI](https://github.com/YOUR_USERNAME/cicd-0112358/actions/workflows/ci.yml/badge.svg?branch=main)
+![CI](https://github.com/dmitry-sapelnikov/cicd-0112358/actions/workflows/ci.yml/badge.svg?branch=main)
 
 A C++17 project demonstrating a CI pipeline with CMake, Conan 2, and GitHub Actions.
 
