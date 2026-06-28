@@ -1,16 +1,10 @@
 #include "fibonacci.h"
 
-[[nodiscard]]
 unsigned long long get_fibonacci(const unsigned index) noexcept
 {
-    if(index == 0U)
+    if(index <= 1U)
     {
-        return 0ULL;
-    }
-
-    if(index == 1U)
-    {
-        return 1ULL;
+        return index;
     }
 
     unsigned long long prev = 0ULL;
